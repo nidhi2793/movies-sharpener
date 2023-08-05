@@ -3,6 +3,7 @@ import MoviesList from "./components/MoviesList";
 import "./App.css";
 import { useEffect } from "react";
 import { useCallback } from "react";
+import NewMovieForm from "./components/NewMovieForm";
 
 let fetchMovieInterval = null;
 
@@ -22,7 +23,7 @@ function App() {
     }, 5000);
   }
 
-  const fetchMoviesHandler = useCallback(async () => {
+  const fetchMoviesHandler = async () => {
     setIsLoading(true);
     setError(null);
     try {
@@ -38,9 +39,7 @@ function App() {
     } catch (error) {
       setError(error.message);
     }
-  }, []);
-
-  useEffect(() => fetchMoviesHandler(), [fetchMoviesHandler]);
+  };
 
   function handleRetry() {
     clearInterval(fetchMovieInterval);
@@ -50,6 +49,9 @@ function App() {
 
   return (
     <React.Fragment>
+      <section>
+        <NewMovieForm />
+      </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
